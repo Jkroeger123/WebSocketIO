@@ -3,7 +3,6 @@ const app = express();
 const server = require('http').createServer((req, res) => res.end());
 
 const io = require('socket.io')(server, {
-  perMessageDeflate :false,
     cors: {
       origin: "*",
       methods: ["GET", "POST"]

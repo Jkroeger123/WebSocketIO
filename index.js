@@ -1,15 +1,10 @@
-const io = require('socket.io')(process.env.PORT || 5000, {
+const express = require('express');
+const app = express();
+const server = require('http').createServer((req, res) => res.end());
+
+const io = require('socket.io')(server, {
     cors: {
-      origins: ["*"],
-      handlePreflightRequest: (req, res) => {
-        res.writeHead(200, {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST",
-          "Access-Control-Allow-Headers": "my-custom-header",
-          "Access-Control-Allow-Credentials": true,
-        });
-        res.end();
-      },
+      origin: "*",
       methods: ["GET", "POST"]
     }
   });
@@ -24,3 +19,7 @@ io.on('connection', (socket) => {
         })
     })
 })
+
+server.listen(process.env.PORT || 5000, () => {
+  console.log('listening on *:5000');
+});
